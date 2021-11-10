@@ -1,0 +1,60 @@
+{% extends 'Administration/base.html' %} 
+{% load static %} 
+{% load crispy_forms_tags %}
+{% block content %} 
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Modification informations utilisateur</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/leads/Administration/">Gestion des utilisateurs</a></li>
+              <li class="breadcrumb-item active">Mise à jour d'informations</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-header">         
+            <a href="{% url 'leads:list-utilisateur' %}" class="btn btn-primary">Liste des utilisateurs</a>
+            {% if agent.is_active %}
+            <a href="{% url 'leads:deactivate-user' agent.pk %}" class="btn btn-warning">Désactiver le compte</a>
+            {% else %} 
+            <a href="{% url 'leads:activate-user' agent.pk %}" class="btn btn-success">Activer le compte</a>
+            {% endif %}
+          </div>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %} 
+            <div class="card-body">
+              {{form1|crispy}}
+              {{form2|crispy}}
+            </div>
+            <div class="card-footer">
+              <input type="submit" class="btn btn-warning float-right ml-3" value="Enregistrer les modifications"/>
+          </form> 
+              <a href="{% url 'leads:list-utilisateur' %}"  class="btn btn-primary float-right">Annuler les modifications </a>
+          </div>
+          
+        </div>       
+      </div>           
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+{% endblock content %}

@@ -1,0 +1,94 @@
+{% extends 'Administration/base.html' %} 
+{% load static %} 
+{% block content %} 
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Dossiers fournisseurs</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Fournisseurs</a></li>
+              <li class="breadcrumb-item active">Liste des dossiers Fournisseurs</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <span><b>Exporter : </b><a href="#" class="btn btn-success">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a></span>
+                
+                <span><b>Importer :</b></span>                
+                <a href="#" class="btn btn-success">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a>
+                <a href="{% url 'leads:ajouter-fournisseur' %}" class="btn btn-primary">Ajouter un fournisseur</a>
+                <br>
+                <br>
+                <br>
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>ID #</th>
+                    <th>Raison</th>
+                    <th>Date d'inscription</th>
+                    <th>Email</th>
+                    <th>N° Téléphone</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                    {% if fournisseurs.count != null %}
+                      {% for f in fournisseurs %} 
+                        <tr class="text-center">
+                          <td>{{f.id}}</td>
+                          <td>{{f.raison}} 4.0</td>
+                          <td>{{f.created_at}}</td>
+                          <td> {{f.email}}</td>
+                          <td>{{f.telephone}}</td>
+                          <td>
+                            <center>
+                            <a href="{% url 'leads:details-fournisseurs' pk=f.id %}" style="text-decoration: none;color: coral;" ><i title="Afficher les informations du fournisseur" class="fas fa-info-circle"></i></a>
+                            <a href="{% url 'leads:modifier-fourniseur' pk=f.id %}" ><i title="Modifier les informations" class="fas fa-edit"></i>
+                            <a href="{% url 'leads:supprimer-fournisseur' pk=f.id %}"><i title="Supprimer le dossier fournisseur." class="fas fa-trash-alt"></i></a>
+                            
+                            </center>
+                          </td>
+                        </tr>
+                      {% endfor %} 
+                    {% else %} 
+                        <tr>
+                          <td colspan="6"><center><h3>Aucun fournisseur trouver</h3></center></td>
+                        </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
+
+<!-- ./wrapper -->
+{% endblock content %} 

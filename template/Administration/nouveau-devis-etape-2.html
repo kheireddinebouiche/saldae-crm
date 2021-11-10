@@ -1,0 +1,137 @@
+{% extends 'Administration/base.html' %} 
+{% load static %} 
+
+{% block content %} 
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Formulaire création devis - ETAPE 2</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'leads:liste-des-devis' %}">Devis</a></li>
+              <li class="breadcrumb-item active">Ajouter des produits</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <div class="card">
+              <div class="card-body">
+                
+                <div class="card">
+                    <div class="card-header">Détails du devis</div>
+                    <div class="card-body">
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label>Id/N° Devis :</label>
+                          {{devis.id}}
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label>Date :</label>
+                          {{devis.date_du_bon}}
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label>Client/Prospet :</label>
+                          {{devis.prospet}}
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-12">
+                          <label>Adresse de livraion :</label>
+                          {{devis.adresse_livraison}}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="" class="btn btn-warning">Modifier</a>
+                    </div>
+                </div>
+
+
+                <label>Ajouter un/des produits :</label> <hr>
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="form-row">                                    
+                          <div class="form-group col-md-3">
+                            <label>Produit/Service :</label>
+                            {{form.product}}
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label>Quantité :</label>
+                            {{form.qtr}}
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label>Prix :</label>
+                            {{form.prix}}
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label>Remise :</label>
+                            {{form.remise}}
+                          </div>                              
+                  </div>
+                  
+                   <center><input type="submit" class="btn btn-warning" value="Ajouter le produit"></center> 
+                  
+              </form>
+                <hr>
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>ID. produit/service</th>
+                    <th>Libellé</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th>Remise</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for ar in devis.lignes_devis.all %}
+                      <tr>
+                        <td>{{ar.id}}</td>
+                        <td>{{ar.product.designation}}</td>
+                        <td>{{ar.qtr}}</td>
+                        <td>{{ar.prix}}</td>
+                        <td>{{ar.remise}}</td>
+                        <td><a href="#"><i title="Supprimer le produit/article" class="fas fa-trash-alt"></i></a></td>
+
+                      </tr>
+                    {% endfor %}
+                  
+                  </tbody>
+                </table>
+                
+
+              </div>
+
+              <div class="card-footer">
+                
+                <a href="{% url 'leads:liste-des-devis' %}" class="btn btn-danger ml-2 float-right">Annuler</a>
+                {% if not devis.etat == 'bro' %} 
+                 <a href="{% url 'leads:set-brouillon' devis.id %}" class="btn btn-warning ml-2 mr-2 float-rigth" >Brouillon</a>
+                {% endif %}           
+                <a href="{% url 'leads:sauvegarde-devis' devis.id %}" class="btn btn-success float-right">Sauvegarder</a>
+                <a href="#" class="btn btn-warning mr-2 float-right">Imprimer</a>
+              </div>
+          </div>
+        
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+</div>
+<!-- ./wrapper -->
+{% endblock content %}

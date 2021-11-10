@@ -1,0 +1,115 @@
+{% extends 'Administration/base.html' %} 
+{% load crispy_forms_tags %} 
+{% load static %} 
+{% block content %} 
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Formulaire d'ajout de produit/article</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'produits:liste-produits'%}">Produits</a></li>
+              <li class="breadcrumb-item active">Ajouter un produit</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                 <label for="info_produit"><h4>Informations du produit</h4></label>
+                 <hr>
+                  <div id="info_produit" class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="form.reference">Référence/Identification :</label>
+                      {{form.reference}}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="form.designation">Désignation/Libellé :</label>
+                      {{form.designation}}
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="form.cat_produit">Catégorie produit :</label>
+                      {{form.cat_produit}}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="form.cat_produit">Type produit :</label>
+                      {{form.type_produit}}
+                    </div>
+                  </div>
+                  
+                  
+                  <label for="tarification"><h4>Tarification du produit </h4></label>
+                  <hr>
+                  <div id="tarification" class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="form.prix">Prix :</label>
+                      {{form.prix}}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="form.promo">Prix promo :</label>
+                      {{form.promo}}
+                    </div>
+                  </div>
+
+                  <label for="car_produit"><h4>Caractéristiques du produit </h4></label>
+                  <hr>
+                  <div id="car_produit" class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="form.prix">Couleur :</label>
+                      {{form.couleur}}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="form.promo">Poids :</label>
+                      {{form.poids}}
+                    </div>
+                  </div>
+
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="form.prix">Couleur :</label>
+                      {{form.hauteur}}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="form.promo">Largeur :</label>
+                      {{form.largeur}}
+                    </div>
+                  </div>
+              
+
+                </div>                       
+                <div class="card-footer">
+                    <button class="btn btn-primary float-right">Créer</button> 
+                </div>
+            </form>
+            </div>
+           
+        </div>      
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+</div>
+<!-- ./wrapper -->
+
+{% endblock content %}

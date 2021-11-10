@@ -1,0 +1,114 @@
+{% extends 'Administration/base.html' %} 
+{% load static %} 
+
+{% block content %} 
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Devis</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Devis</a></li>
+              <li class="breadcrumb-item active">Liste des devis</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Filtrer</h4>
+              </div>
+            <div class="card-body">
+              <form method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Client/Prospet :</label>
+                    <input type="text" name="q" class="form-control" placeholder="Nom du client/prospet">                
+                  </div> 
+                  <div class="form-group col-md-6">
+                   
+                  </div>
+                </div>         
+            </div>
+            <div class="card-footer">
+              <a href="{% url 'leads:resultat-recherche-devis' %}" class="btn btn-warning">Filtrer</a>
+            </div>
+          </form>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>ID. Devis</th>
+                    <th>Date devis</th>
+                    <th>Créateur</th>
+                    <th>Client/Prospet</th>
+                    <th>Etat</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for d in devis %}
+                  <tr>
+                    <td>{{d.id}}</td>
+                    <td>{{d.date_du_bon}}</td>
+                    <td>{{d.user}}</td>
+                    <td>{{d.prospet}}</td>
+                    <td>{{d.get_etat_display}}</td>
+                    
+                    <td>
+                      <center>
+                        <a href="#" style="text-decoration: none;color: blue;" ><i title="Afficher les informations du devis" class="fas fa-info-circle"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'leads:modification-du-devis' d.pk %}"><i title="Editer le devis" class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'leads:suppression-du-devis' d.pk %}"  style="color: red;"><i title="Supprimer le devis" class="far fa-trash-alt"></i></a> &nbsp;&nbsp;&nbsp;
+                        {% if d.etat == 'sau' %} 
+                          <a href="#" ><i title= "Imprimer" class="fas fa-print"></i></a>&nbsp;&nbsp;&nbsp
+                        {% endif %}
+                      </center>
+
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
+
+<!-- ./wrapper -->
+
+
+{% endblock content %} 

@@ -1,0 +1,112 @@
+
+{% extends 'Administration/base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Dossiers clients</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Clients</a></li>
+              <li class="breadcrumb-item active">Liste des dossiers client</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="form-row col-sm-12">
+                  <span><b>Exporter : </b><a href="{% url 'leads:export-xls' %}" class="btn btn-success">XLS</a> <a href="{% url 'leads:export-csv' %}" class="btn btn-success mr-3">CSV</a></span>
+                
+                  <span><b>Importer :</b></span>  
+  
+                  <a href="#" class="btn btn-success ml-1 mr-1">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a>
+  
+                  <a href="{% url 'leads:add-client' %}" class="btn btn-primary">Ajouter un client</a>
+  
+                  <form class="ml-3" action="{% url 'leads:resultat-de-recherche' %}" method="get">
+                    <div class="input-group">
+                      <div class="form-outline">
+                        <input placeholder="Raison / Dérigeant" type="search" name="q" id="form1" class="form-control" />
+                        
+                      </div>
+                      <button type="button" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>    
+                  </form> 
+                </div>
+                  
+                <hr>                                          
+                <br>
+                <br>
+                <br>
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>ID. Client</th>
+                    <th>Dénomination</th>
+                    <th>Résponsable</th>
+                    <th>Date de création</th>
+                    <th>Type Client</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for c in client %}
+                  <tr>
+                    <td>{{c.id}}</td>
+                    <td>{{c.raison}}</td>
+                    <td>{{c.gerant}}</td>
+                    <td>{{c.created_at}}</td>
+                    <td>{{c.get_categorie_client_display}}</td>
+                    <td>
+                      <center>
+                        <a href="{%url 'leads:details-client' c.pk %}" style="text-decoration: none;color: blue;" ><i title="Afficher les informations du client" class="fas fa-info-circle"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'leads:update-client' c.pk %}"><i title="Mise à jour des informations du client" class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'leads:delete-client' c.pk %}"  style="color: red;"><i title="Supprimé" class="far fa-trash-alt"></i></a> &nbsp;&nbsp;&nbsp;
+                      </center>
+
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
+
+<!-- ./wrapper -->
+
+{% endblock content %}
+
+

@@ -1,0 +1,172 @@
+{% extends 'Administration/base.html' %} 
+{% load static %} 
+{% block content %} 
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+            
+          <div class="col-sm-6">
+            <h1>Liste des tâches</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Tâches</a></li>
+              <li class="breadcrumb-item active">Liste des tâches</li>
+            </ol>
+          </div>
+        </div>
+
+       
+         <!-- Small boxes (Stat box) -->
+         <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                
+                    
+                  <h3>{{taches.count}}</h3>
+  
+                  <p>Nombre de tache</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">Plus d'informations<i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{tache_en_cour.count}}</h3>
+  
+                  <p>Taches en cours</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">Plus d'informations  <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{tache_annuler.count}}</h3>
+  
+                  <p>Taches annulées</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer">Plus d'informations  <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3>65</h3>
+  
+                  <p>Taches non Assigné</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">Plus d'informations <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+          <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                  <div class="card-header">
+                      <center>
+                        <a href="{% url 'leads:ajouter_tache' %}" class="btn btn-success mr-1">Créer une tache</a>
+                        <a href="" class="btn btn-warning mr-1">Assigner une tache</a>
+                      </center>
+                  </div>
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr class="text-center">
+                    <th>ID. #</th>
+                    <th>Sommaire</th>
+                    <th>Date de debut</th>
+                    <th>Date de fin</th>
+                    <th>Status</th>
+                    <th>Client</th>
+                    <th>Priorite</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% if not taches.is_empty %}
+                        {% for t in taches %}
+                        <tr>    
+                                <td>{{t.id}}</td>
+                                <td>{{t.sommaire}}</td>
+                                <td>{{t.date_debut}}</td>
+                                <td>{{t.date_fin}}</td>
+                                <td>{{t.get_status_display}}</td>
+                                <td>{{t.client}}</td>
+                                <td>{{t.priorite}}</td>
+                                <td>
+                                    <center>
+                                        <a href="{% url 'leads:modifier-tache' t.pk %}" style="text-decoration: none;  color: black"><i title="Modifier les informations de la tache" class="far fa-edit"></i></a>
+                                        <a href="{% url 'leads:supprimer-tache' t.pk %}" style="text-decoration: none; color: red;"><i title="Supprimer la tache" class="fas fa-trash"></i></a>
+                                        <a href="{% url 'leads:details-taches' t.pk %}" style="color: blue;"><i title="Afficher les informations de la tache" class="fas fa-info-circle"></i></a>
+                                        <a href="{% url 'leads:archiver-la-tache' t.pk %}" style="color: coral; text-decoration: none;"><i title="Archiver la tache" class="fas fa-file-archive"></i></a>
+                                      </center>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %} 
+                        <tr>
+                            <td colspan="8" class="text-center">Aucune tache n'a été créer pour le moment.</td>
+                        </tr>
+                    {% endif %}
+
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
+
+<!-- ./wrapper -->
+
+{% endblock content %}

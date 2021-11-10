@@ -1,0 +1,88 @@
+{% extends 'Administration/base.html' %} 
+{% load static %} 
+{% block content %} 
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Liste des utilisateurs</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/leads/Administration/">Gestion des utilisateurs</a></li>
+              <li class="breadcrumb-item active">Liste des utilisateurs</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>N° Identification</th>
+                      <th>Nom</th>
+                      <th>Prénom</th>
+                      <th>Adresse E-mail</th>
+                      <th>Niv.</th>
+                      <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for agent in agents %}
+                    <tr>
+                      <td>{{agent.id}}</td>
+                      <td>{{agent.agent.num_identification}}</td>
+                      <td>{{agent.first_name}}</td>
+                      <td>{{agent.last_name}}</td>
+                      <td>{{agent.email}}</td>
+                      <td>{{agent.agent.get_user_type_display}}</td> 
+                      <td>
+                          <center>
+                          <a href="{% url 'leads:update-agent' agent.pk %}"><i title="Mise à jour des informations de l'utilisateur" class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                          <a href="{% url 'leads:delete-user' agent.pk %}"  style="color: red;"><i title="Supprimé" class="far fa-trash-alt"></i></a> &nbsp;&nbsp;&nbsp;
+                          
+                          {% if agent.is_active %} 
+                              <a href="{% url 'leads:deactivate-user' agent.pk %}"><i title="Désactiver le compte utilisateur" class="fas fa-unlink" style="color: red;"></i></a>
+                          {% else %}    
+                              <a href="{% url 'leads:activate-user' agent.pk %}"><i title="Activer le compte utilisateur" class="fas fa-check-circle" style="color: greenyellow;"></i></a>
+                          {% endif %}
+                          </center>
+                      </td>                     
+                    </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+           
+      </div>
+                
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+{% endblock content %}

@@ -1,0 +1,115 @@
+{% extends 'Administration/base.html' %} 
+{% load crispy_forms_tags %}
+{% load static %} 
+
+{% block content %} 
+ 
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Formulaire de création de tache</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Tâches</a></li>
+              <li class="breadcrumb-item active">Ajouter une tâche</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                  {% csrf_token %}
+                  <label>Status de la tâche </label>
+                  <hr>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Priorité de la tâche :</label>
+                      {{form.priorite}}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Status de la tâche :</label>
+                      {{form.status}}
+                    </div>
+                  </div>
+                  
+                  <label>Affectation / Assignation</label>
+                  <hr>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Client</label>
+                      {{form.client}}
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label>Assigner à l'agent / utilisateur :</label>
+                      {{form.assigner}}
+                    </div>
+                  </div>
+
+                  <label>Déscription de la tâche</label>
+                  <hr>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label>Sommaire :</label>
+                      {{form.sommaire}}
+                    </div>     
+                    <div class="form-group col-md-8">
+                      <label>Déscription :</label>
+                      {{form.description}}
+                    </div>                
+                  </div>
+                  <div class="form-row">
+                                     
+                  </div>
+                  <hr>
+                  <label>Plannification </label>
+                  <hr>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Date de début :</label>
+                      {{form.date_debut}}
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label>Date de fin :</label>
+                      {{form.date_fin}}
+                    </div>
+                  </div>
+                </div>
+                                               
+                <div class="card-footer">
+                   <center><a href="#" class="btn btn-warning">Annuler</a> <button class="btn btn-primary">Créer la tâche </button> </center>
+                </div>
+
+            </form>
+            </div>
+           
+        </div>
+
+        
+        
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+
+</div>
+<!-- ./wrapper -->
+
+{% endblock content %} 

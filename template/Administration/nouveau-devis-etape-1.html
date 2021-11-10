@@ -1,0 +1,86 @@
+{% extends 'administration/base.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Formulaire création devis - ETAPE 1</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/lead/Enter-Admin/">Devis</a></li>
+              <li class="breadcrumb-item active">Nouveau devis</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <div class="card">
+              <div class="card-body">
+                 <form method="POST">
+                      {% csrf_token %}
+                      <div class="row">
+                          <div class="col-lg-6">                            
+                              <label>Prospet/client</label>
+                              <a href=""><i class="fas fa-user-plus"></i></a>
+                             {{form.prospet}} 
+                             
+                          </div>
+                          <div class="col-lg-6">
+                            <label>Status :</label>
+                            {{form.status}}
+                          </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Date du devis</label>
+                          {{form.date_du_bon}}
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label>Méthode de paiement :</label>
+                          {{form.methode_paiement}}
+                        </div>                       
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-12">
+                          <label>Adresse de livraison :</label>
+                          {{form.adresse_livraison}}
+                        </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-lg-12">
+                              <label>Observation</label>
+                              {{form.observation}}
+                          </div>
+                      </div>
+                      <div class="card-footer">
+                        <center><input type="submit" class="btn btn-primary"  value="Créer le devis"/> </center>
+                      </div>                 
+                  </form>
+              </div>
+          </div>
+        
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+</div>
+<!-- ./wrapper -->
+
+
+  {% endblock content %}
+
+
+
