@@ -142,6 +142,8 @@ AUTH_USER_MODEL = 'leads.User'
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
