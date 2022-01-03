@@ -248,6 +248,27 @@
           <!-- fin gestion des utilisateurs -->
           {% endif %}
 
+          {% if request.user.agent.user_type == 'ad' %} 
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="far fa-sun nav-icon"></i>
+              <p>
+               Configuration
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'leads:index_secteur' %}" class="nav-link">
+                  <i class="fas fa-chart-pie nav-icon"></i>
+                  <p>Secteurs d'activité</p>
+                </a>
+              </li>
+              
+            </ul>
+          </li>
+          {% endif %} 
+
           <!-- Gestion des produits -->
           <li class="nav-item">
             <a href="#" class="nav-link">

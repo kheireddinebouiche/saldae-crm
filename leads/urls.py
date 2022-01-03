@@ -79,7 +79,15 @@ urlpatterns = [
     ###### FORMULAIRES DE FILTRAGE ######################################################################
     path('resultat-de-recherche/', SearchClientView.as_view(), name='resultat-de-recherche'),
     path('resultat-recherche-devis/', FilterDevisView.as_view(), name="resultat-recherche-devis"),
-    ###### FIN FORMULAIRES DE FILTRAGE #################################################################
+    ###### FIN FORMULAIRES DE FILTRAGE ##################################################################
+
+    ###### GESTION DES SECTEUR D ACTIVITE ###############################################################
+    path('Administration/secteurs-activites/', index_secteur, name="index_secteur"),
+    path('Administration/secteur-activitees/ajouter-secteur/', ajout_secteur, name="ajout_secteur"),
+    path('Administration/secteur-activitess/supprimer-secteur/<int:pk>/', supprimer_secteur, name="supprimer-secteur"),
+    path('Administration/secteur-activitess/modifier-secteur/<int:pk>/', modifier_secteur, name="modifier-secteur"),
+
+    ###### FIN GESTION DES SECTEUR D ACTIVITE ###########################################################
 
 ]
 

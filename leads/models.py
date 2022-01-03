@@ -103,9 +103,11 @@ class Client(models.Model):
 
     categorie_client = models.CharField(max_length=1, choices=CAT_CLIENT, null=True, blank=True)
     type_client = models.CharField(max_length=2, choices=TYPE_CLIENT, null=True, blank=True)
+    secteur = models.ForeignKey('SecteurActivite', null=True, blank=True, on_delete=models.CASCADE)
 
     created_at = models.DateField(auto_now=True)
     created_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
+
 
     class Meta:
         verbose_name="Client"
@@ -225,8 +227,14 @@ class ProduitsDevis(models.Model):
         verbose_name='Ligne de devis'
         verbose_name_plural ='Lignes de devis'
 
+    def save(self):
+        total = self.product.prix * self.qtr 
+        return total
+
     def __str__(self):
         return self.product.designation
+
+    
 
    # @property
    # def save(self):

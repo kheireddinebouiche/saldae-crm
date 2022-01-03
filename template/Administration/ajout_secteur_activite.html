@@ -1,0 +1,82 @@
+{% extends 'Administration/base.html' %}  
+{% load static %} 
+
+{% block content %} 
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Secteurs d'activités</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Secteurs d'activités</a></li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <span><b>Exporter : </b><a href="#" class="btn btn-success">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a></span>
+                
+                  <span><b>Importer :</b></span>                
+                  <a href="#" class="btn btn-success">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a>
+                  <a href="{% url 'leads:ajout_secteur' %}" class="btn btn-primary">Ajouter un secteur</a>
+                  <br>
+                  <br>
+                  <br>
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th>ID. Secteur</th>
+                      <th>Libelle</th>
+                      <th>Action</th>
+                      
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for l in libelle %}
+                    <tr class="text-center">
+                      <td>{{l.id}}</td>
+                      <td>{{l.libelle}}</td>
+                                     
+                      <td>
+                          <center>
+                          
+                          <a href="{% url 'leads:modifier-secteur' l.id %}"><i title="Modifier le secteur d'activité" class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'leads:supprimer-secteur' l.id %}"  style="color: red;"><i title="Supprimé" class="far fa-trash-alt"></i></a> &nbsp;&nbsp;&nbsp;                               
+                          
+                        </center>
+                      </td>                     
+                    </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div> 
+      </div>    
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+{% endblock content %}  

@@ -123,12 +123,16 @@ class NoteForm(ModelForm):
 class ClientForm(ModelForm):  
     class Meta:
         model = Client
-        fields = {'raison','adresse','rue','province','pays','zip','gerant','telephone','fax','email','categorie_client'}
+        fields = {'raison','adresse','rue','province','pays','zip','gerant','telephone','fax','email','categorie_client','secteur'}
         widgets = {
             'raison': TextInput(attrs={
                 'class': "form-control",
                 'placeholder' : "Raison social de l'entreprise/individu.",
                 'style' : 'margin: auto;',
+            }),
+            'secteur' : widgets.Select(attrs={
+                'class' : 'form-control',
+                'placeholder' : "Secteur d'activité"
             }),
             'adresse': TextInput(attrs={
                 'class': "form-control",
@@ -382,8 +386,6 @@ class ContactForm(ModelForm):
         }
 
 
-
-
 FAVORITE_COLORS_CHOICES = [
     ('blue', 'Blue'),
     ('green', 'Green'),
@@ -397,3 +399,14 @@ class DropDownDevisState(forms.Form):
         
         choices=FAVORITE_COLORS_CHOICES,
     )
+
+class SecteurActiviteForm(ModelForm):
+    class Meta:
+        model = SecteurActivite
+        fields = {'libelle'}
+        widgets = {
+            'libelle' : TextInput(attrs={
+                'class' : 'form-control',
+                'placeholder': "Secteur d'activité",
+            }),
+        }

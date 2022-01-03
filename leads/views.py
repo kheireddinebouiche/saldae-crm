@@ -326,6 +326,7 @@ def AjouterClient(request):
             categorie_client = form.cleaned_data.get('categorie_client')
             fax = form.cleaned_data.get('fax')
             email = form.cleaned_data.get('email')
+            secteur = form.cleaned_data.get('secteur')
 
             client = Client (
                 raison = raison,
@@ -340,6 +341,7 @@ def AjouterClient(request):
                 fax = fax,
                 email = email,
                 created_by = request.user.agent,
+                secteur = secteur,
             )
 
             client.save()
@@ -803,3 +805,64 @@ class FilterDevisView(ListView):
 ########## GESTION DES IMPRESSION PDF #########################
 
 ########## FIN GESTION DES IMPRESSION PDF #####################
+
+
+########## GESTION DES SECTEURS D ACTIVITEES ##################
+
+def index_secteur(request):
+    libelle = SecteurActivite.objects.all()
+    
+    context = {
+        'libelle' : libelle,
+    }
+
+    return render(request,'Administration/ajout_secteur_activite.html', context)
+
+def ajout_secteur(request):
+    form = SecteurActiviteForm()
+    if request.method == 'POST':
+        form = SecteurActiviteForm(request.POST)
+        if form.is_valid():
+            libelle = form.cleaned_data.get('libelle')
+
+            secteur = SecteurActivite(
+                libelle = libelle,
+            )
+
+            secteur.save()
+            messages.success(request,"Enregistrement avec succées.")
+            return redirect("leads:index_secteur")
+
+        else:
+            messages.error(request,"Une erreur c'est produite lors du traitement de la requête.")
+            return redirect('leads:index_secteur')
+
+    context = {
+        'form' : form,
+    }
+
+    return render(request,'Administration/formulaire_ajout_secteur.html', context)
+
+def supprimer_secteur(request, pk):
+    secteur = SecteurActivite.objects.get(id=pk)
+    secteur.delete()
+    messages.success(request,"Le secteur d'activité à été supprimer.")
+    return redirect("leads:index_secteur")
+
+def modifier_secteur(request, pk):
+    secteur = SecteurActivite.objects.get(id=pk)
+    form = SecteurActiviteForm(instance=secteur)
+    if request.method == 'POST':
+        form = SecteurActiviteForm(request.POST, instance=secteur)
+        form.save()
+        messages.success(request, "Modificiation effectuer avec succès.")
+        return redirect('leads:index_secteur')
+
+    context = {
+        'form': form,
+        'secteur' : secteur,
+    }
+
+    return render(request, 'Administration/formulaire_modification_secteur.html', context)
+
+########## FIN GESTION DES ACTIVITEES #########################
