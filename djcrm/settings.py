@@ -37,7 +37,7 @@ SECRET_KEY = '0yino@3!_ta-#kcoj(d!aqif9&g(&a6=__(z=^$w!=1+-_-u$s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['saldaecrm.pythonanywhere.com','127.0.0.1']
 
 
 # Application definition
