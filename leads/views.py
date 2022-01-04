@@ -14,43 +14,37 @@ from django.contrib import messages
 from django.views.generic import ListView
 
 from django.db.models import Q
-
+from help.models import *
 
 
 ####### IMPORT EXPORT VIEW CLIENT ###################################################
-
 def export_xls(request):
     client_resource = ClientResources()
     dataset = client_resource.export()
     response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename="ListeClients.xls"'
     return response
-
 def export_csv(request):
     client_resource = ClientResources()
     dataset = client_resource.export()
     response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename="ListeClients.csv"'
     return response
-
 ####### END IMPORT EXPORT VIEW CLIENT ###############################################
 
 ###### IMPORT EXPORT VIEW PRODUCT ###################################################
-
 def export_xls_produit(request):
     product_resource = ProductResouces()
     dataset = product_resource.export()
     response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename="ListeProduits.xls"'
     return response
-
 def export_csv_produit(request):
     product_resource = ProductResouces()
     dataset = product_resource.export()
     response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename="ListProduits.csv"'
     return response
-
 ###### END EXPORT VIEW PRODUCT ######################################################
 
 def EnterToAdmin(request):
@@ -389,10 +383,9 @@ def detailsClient(request, pk):
         client : 'client'
     }
     return render(request, 'Administration/details-client.html', context)
-
 ###### Fin gestion des clients #################################################################################
 
-############# GESTION DES DEVIS ############################################################
+############# GESTION DES DEVIS ################################################################################
 @transaction.atomic
 def NewDevis(request):
     form = DevisForm()
@@ -447,6 +440,7 @@ def DevisEnCours(request):
                     qtr = qtr,
                     prix = prix,
                     remise = remise,
+                    total = qtr * prix,
                 )
 
                 ligne_devis.save()
@@ -500,6 +494,7 @@ def GetDevis(request, pk):
                     qtr = qtr,
                     prix = prix,
                     remise = remise,
+                    total = qtr * prix,
                 )
 
                 ligne_devis.save()
@@ -534,6 +529,7 @@ def AjouterAuDevis(request, pk):
                     qtr = qtr,
                     prix = prix,
                     remise = remise,
+                    total = qtr * prix,
                 )
 
                 d = devis.lignes_devis.add(ligne_devis)
@@ -560,11 +556,9 @@ def ChangeStatSauvegrade(request, pk):
         devis.save()
         messages.success(request, 'Devis sauvegrader avec succès.')
         return redirect('leads:liste-des-devis')
+############# FIN DE GESTION DEVIS ############################################################################
 
-
-############# FIN DE GESTION DEVIS #########################################################
-
-############## GESTION DES TACHES ############################
+############## GESTION DES TACHES #############################################################################
 def ajouter_tache(request):
     form = TachesForm()
     if request.method == 'POST':
@@ -667,11 +661,10 @@ def list_taches_archivees(request):
     }
 
     return render(request, 'Administration/list-taches-archivees.html', context)
-
 ################ FIN GESTION DES TACHES########################
 
-################ GESTION DES FOURNISSEURS #####################
 
+################ GESTION DES FOURNISSEURS #####################
 def ajouter_fournisseur(request):
     form = FournisseursForm()
     if request.method == 'POST':
@@ -753,8 +746,8 @@ def liste_fournisseurs(request):
         'fournisseurs' : fournisseurs,
     }
     return render(request, 'Administration/liste-fournisseur.html', context)
-
 ################ FIN GESTION DES FOURNISSEURS #################
+
 
 ############### GESTION DU CALENDRIER #########################
 
@@ -808,7 +801,6 @@ class FilterDevisView(ListView):
 
 
 ########## GESTION DES SECTEURS D ACTIVITEES ##################
-
 def index_secteur(request):
     libelle = SecteurActivite.objects.all()
     
@@ -865,4 +857,17 @@ def modifier_secteur(request, pk):
 
     return render(request, 'Administration/formulaire_modification_secteur.html', context)
 
+class SearchClientViewBySecteur(ListView):
+    model = Client
+    template_name='Administration/resultats-de-recherche.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Client.objects.filter(
+            Q(secteur__icontains=query)
+        )
+        return object_list
 ########## FIN GESTION DES ACTIVITEES #########################
+
+def IndexHelp(request):
+    return render(request, "Administration/help.html")

@@ -23,12 +23,17 @@ urlpatterns = [
 
     path('add-user-1/', RegisterAgent, name="add-user-1"),
 
+    ########## GESTION DES CLIENTS #################################################################
     path('add-client/', AjouterClient, name="add-client"),
     path('list-dossier/', ListClient, name="list-dossier"),
     path('<int:pk>/update-client/', UpdateClient, name="update-client"),
     path('<int:pk>/delete-client/', DeleteClient, name="delete-client"),
     path('<int:pk>/details-client', detailsClient, name="details-client"),
+    path('recherche-par-secteur/', SearchClientViewBySecteur, name="recherche-par-secteur"),
+    ########## FIN GESTION DES CLIENTS #############################################################
 
+
+    ########## GESTION DES DEVIS ###################################################################
     path('nouveau-devis/', NewDevis , name="nouveau-devis"),
     path('nouveau-devis-etape-2/',DevisEnCours, name="nouveau-devis-etape-2"),
     path('liste-des-devis/', ListDevis, name="liste-des-devis"),
@@ -37,6 +42,7 @@ urlpatterns = [
     path('AjouterAuDevis/<int:pk>/', AjouterAuDevis, name="AjouterAuDevis"),
     path('set-brouillon/<int:pk>/',ChangeStatBrouillon, name="set-brouillon"),
     path('sauvegarde-devis/<int:pk>/', ChangeStatSauvegrade, name="sauvegarde-devis"),
+    ########### FIN GESTION DES DEVIS ##############################################################
 
     path('list-utilisateurs/', ListUsers, name="list-utilisateur" ),
     path('<int:pk>/activate-user/', ActivateUser, name="activate-user"),
@@ -45,6 +51,7 @@ urlpatterns = [
     path('<int:pk>/delete-user/', DeleteUser, name="delete-user"),
     path('mon-profile/',my_profile, name="mon-profile"),
 
+    ######### GESTION DES TACHES ###################################################################
     path('ajouter-tache/', ajouter_tache, name="ajouter_tache"),
     path('list-taches/', list_taches, name="list-taches"),
     path('<int:pk>/details-tache/', details_tache, name="details-taches"),
@@ -54,22 +61,25 @@ urlpatterns = [
     path('<int:pk>/archiver-la-tache/', archive_tache, name="archiver-la-tache"),
     path('list-taches-archivees/', list_taches_archivees, name="list-taches-archivees"),
     path('<int:pk>/activer-la-tache/', activate_tache, name="activer-la-tache"),
+    ########### FIN GESTION DES TACHES #############################################################
 
+    ########### GESTION DES FOURNISSEURS ###########################################################
     path('ajouter-fournisseur/', ajouter_fournisseur, name="ajouter-fournisseur"),
     path('<int:pk>/modifier-fournisseur/', modifier_fournisseur, name="modifier-fourniseur"),
     path('<int:pk>/details-fournisseur', details_fournisseur, name="details-fournisseurs"),
     path('<int:pk>/supprimer-fournisseur/', supprimer_fournisseur, name="supprimer-fournisseur"),
     path('liste-fournisseur/', liste_fournisseurs, name="liste-fournisseur"),
+    ########## FIN GESTION DES FOURNISSEURS #######################################################
 
-    ###### CLIENT IMPORT EXPORT ############################
+    ###### CLIENT IMPORT EXPORT ###################################################################
     path('export-csv/', export_csv, name="export-csv"),
     path('export-xls/', export_xls, name="export-xls"),
-    ###### END CLIENT IMPORT EXPORT ########################
+    ###### END CLIENT IMPORT EXPORT ###############################################################
 
-    ###### PRODUCT IMPORT EXPORT ############################
+    ###### PRODUCT IMPORT EXPORT ##################################################################
     path('export-csv-produit/', export_csv_produit, name="export-csv-produit"),
     path('export-xls-produit/', export_xls_produit, name="export-xls-produit"),
-    ###### END PRODUCT IMPORT EXPORT ########################
+    ###### END PRODUCT IMPORT EXPORT ##############################################################
 
 
     path('Administration/contact/', affiche_contact, name="contact-us"),
@@ -86,8 +96,12 @@ urlpatterns = [
     path('Administration/secteur-activitees/ajouter-secteur/', ajout_secteur, name="ajout_secteur"),
     path('Administration/secteur-activitess/supprimer-secteur/<int:pk>/', supprimer_secteur, name="supprimer-secteur"),
     path('Administration/secteur-activitess/modifier-secteur/<int:pk>/', modifier_secteur, name="modifier-secteur"),
-
     ###### FIN GESTION DES SECTEUR D ACTIVITE ###########################################################
+
+    ###### DEBUT HELP ###################################################################################
+    path('Administration/get-help', IndexHelp, name="index-help"),
+
+    ###### FIN HELP #####################################################################################
 
 ]
 

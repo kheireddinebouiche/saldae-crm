@@ -227,14 +227,8 @@ class ProduitsDevis(models.Model):
         verbose_name='Ligne de devis'
         verbose_name_plural ='Lignes de devis'
 
-    def save(self):
-        total = self.product.prix * self.qtr 
-        return total
-
     def __str__(self):
         return self.product.designation
-
-    
 
    # @property
    # def save(self):
