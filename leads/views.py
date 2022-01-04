@@ -869,5 +869,10 @@ class SearchClientViewBySecteur(ListView):
         return object_list
 ########## FIN GESTION DES ACTIVITEES #########################
 
+########## DEBUT HELP #########################################
 def IndexHelp(request):
     return render(request, "Administration/help.html")
+
+def GetHelp(request):
+    return render(request,'Administration/get-help.html')
+########## FIN DEBUT HELP #####################################
