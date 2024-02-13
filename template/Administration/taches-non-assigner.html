@@ -1,0 +1,95 @@
+{% extends 'Administration/base.html' %}
+
+{% block content %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+            
+          <div class="col-sm-6">
+            <h1>Liste des tâches</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Tâches</a></li>
+              <li class="breadcrumb-item active">Liste des tâches non assigner</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr class="text-center">
+                    <th>ID. #</th>
+                    <th>Sommaire</th>
+                    <th>Date de debut</th>
+                    <th>Date de fin</th>
+                    <th>Status</th>
+                    <th>Client</th>
+                    <th>Priorite</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% if taches.count > 0 %}
+                        {% for t in taches %}
+                        <tr>    
+                                <td>{{t.id}}</td>
+                                <td>{{t.sommaire}}</td>
+                                <td>{{t.date_debut}}</td>
+                                <td>{{t.date_fin}}</td>
+                                <td>{{t.get_status_display}}</td>
+                                <td>{{t.client}}</td>
+                                <td>{{t.priorite}}</td>
+                                <td>
+                                    <center>
+                                        <a href="{% url 'leads:assign-tache' t.pk %}" style="text-decoration: none;  color: black"><i title="Modifier les informations de la tache" class="far fa-edit"></i></a>
+                                        <a href="#" style="text-decoration: none; color: red;"><i title="Supprimer la tache" class="fas fa-trash"></i></a>
+                                        <a href="#" style="color: blue;"><i title="Afficher les informations de la tache" class="fas fa-info-circle"></i></a>
+                                        <a href="#" style="color: coral; text-decoration: none;"><i title="Archiver la tache" class="fas fa-file-archive"></i></a>
+                                      </center>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %} 
+                        <tr>
+                            <td colspan="8" class="text-center">Aucune tache non assigner</td>
+                        </tr>
+                    {% endif %}
+
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
+    
+{% endblock content %}
+    

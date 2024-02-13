@@ -1,9 +1,20 @@
 from django.shortcuts import render
-from .views import *
+from .models import *
 
 
-def CreateCommande(request):
 
-    
+def ListCommandes(request):
+    commandes= CommandeFournisseur.objects.all()
+    context={
+        'commandes' : commandes,
+    }
+    return render(request, 'Administration/list-commandes.html', context)
 
-    return render(request,'templates/create_commande.html',context)
+def AjouterCommande(request):
+    return render(request, 'Administration/creer-une-commande.html')
+
+def DetailsCommande(request):
+    return render(request, 'Administration/details-commande.html')
+
+def SupprimerCommande(request):
+    pass

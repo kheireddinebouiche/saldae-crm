@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <style>
+        #colplan{
+          margin-top: 100px;
+        }
+          * {
+          box-sizing: border-box;
+        }
+
+        /* Create three columns of equal width */
+        .columns {
+          float: left;
+          width: 33.3%;
+          padding: 8px;
+          height: 500px;
+        }
+
+        /* Style the list */
+        .price {
+          list-style-type: none;
+          border: 1px solid #eee;
+          margin: 0;
+          padding: 0;
+          -webkit-transition: 0.3s;
+          transition: 0.3s;
+        }
+
+        /* Add shadows on hover */
+        .price:hover {
+          box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+        }
+
+        /* Pricing header */
+        .price .header {
+          background-color: #111;
+          color: white;
+          font-size: 25px;
+        }
+
+        /* List items */
+        .price li {
+          border-bottom: 1px solid #eee;
+          padding: 20px;
+          text-align: center;
+        }
+
+        /* Grey list item */
+        .price .grey {
+          background-color: #eee;
+          font-size: 20px;
+        }
+
+        /* The "Sign Up" button */
+        .button {
+          background-color: #043eaa;
+          border: none;
+          color: white;
+          padding: 10px 25px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 18px;
+        }
+
+        /* Change the width of the three columns to 100%
+        (to stack horizontally on small screens) */
+        @media only screen and (max-width: 600px) {
+          .columns {
+            width: 100%;
+          }
+        }
+  </style>
+
+<div class="container" id="colplan">
+<div class="columns" style="height: 500px;">
+  <ul class="price">
+    <li class="header">Free</li>
+    <li class="grey">0.00 DA/ mois</li>
+    <li>5 Clients</li>
+    <li>2 Employées</li>
+    <li>10 Gb de stockage</li>
+    <li>votre-nom.saldaesystems.com</li>
+    {% if not request.user.is_authenticated %} 
+        <li class="grey"><a href="{% url 'leads:souscription-free' %}" class="button">S'inscrire</a></li>
+    {% else %} 
+        <li class="grey"><a href="{% url 'logout' %}" class="button">Veuillez vous déconnecter</a></li>
+    {% endif %}
+  </ul>
+  
+</div>
+
+<div class="columns">
+  <ul class="price">
+    <li class="header">Basic</li>
+    <li class="grey">2499.00 DA/ mois</li>
+    <li>10GB Storage</li>
+    <li>10 Emails</li>
+    <li>10 Domains</li>
+    <li>1GB Bandwidth</li>
+
+     {% if not request.user.is_authenticated %} 
+       <li class="grey"><a href="{% url 'leads:souscription-basic' %}" class="button">S'inscrire</a></li>
+     {% else %} 
+       <li class="grey"><a href="{% url 'logout' %}" class="button">Veuillez vous déconnecter</a></li>
+     {% endif %}
+
+  </ul>
+  
+</div>
+
+<div class="columns">
+  <ul class="price">
+    <li class="header">Pro.</li>
+    <li class="grey">7499.00 DA/ mois</li>
+    <li>10GB Storage</li>
+    <li>10 Emails</li>
+    <li>10 Domains</li>
+    <li>1GB Bandwidth</li>
+    {% if not request.user.is_authenticated %} 
+     <li class="grey"><a href="{% url 'leads:souscription-pro' %}" class="button">S'inscrire</a></li>
+    {% else %} 
+    <li class="grey"><a href="{% url 'logout' %}" class="button">Veuillez vous déconnecter</a></li>
+    {% endif %}
+  </ul>
+  
+</div>
+
+</div>
+{% endblock content %}

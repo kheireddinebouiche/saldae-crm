@@ -1,7 +1,9 @@
+from warnings import catch_warnings
 from django.shortcuts import render, redirect, HttpResponse
 from produits.models import Produit, Typeproduit
 from produits.forms import *
 from django.contrib import messages
+from django.db import transaction
 
 
 def Liste_produit(request):
@@ -90,4 +92,44 @@ def Create_produit(request):
         }
 
         return render(request, 'Administration/ajouter-produit.html', context)
+
+@transaction.atomic
+def StockUpdate(request, pk):
+    produit = Produit.objects.get(id = pk)
+
+    try:
+        stock = Stock.objects.get(produit = produit)
+    except:
+        
+
+        form = StockProduitForm()
+
+        if request.method == 'POST':
+            form = StockProduitForm(request.POST)
+            if form.is_valid():
+                qte = form.cleaned_data.get('qte')
+                lot = form.cleaned_data.get('lot')
+                date_fabrication = form.cleaned_data.get('date_fabrication')
+                date_peremption = form.cleaned_data.get('date_peremption')
+
+                stock = Stock(
+                    qte = qte,
+                    lot = lot,
+                    date_fabrication = date_fabrication,
+                    date_peremption = date_peremption,
+                )
+                stock.save()
+                messages.success(request, 'La quantité de produit à été mise à jour.')
+                return redirect("produits:liste-produits")
+
+            else:
+                messages.error(request, "Une erreure est survenue lors du traitement de l'information.")
+                return redirect(request,"produits:liste-produits")
+
+        context = {
+            'produit' : produit,
+            'form': form,
+        }
+
+        return render(request, 'Administration/stock-de-produit.html', context)
 

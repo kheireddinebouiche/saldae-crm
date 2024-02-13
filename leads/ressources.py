@@ -11,7 +11,6 @@ class ProductResouces(resources.ModelResource):
     class Meta:
         model = Produit
 
-
 class FournisseurResources(resources.ModelResource):
     class Meta:
         model = Fournisseurs

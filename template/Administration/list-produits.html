@@ -86,7 +86,7 @@
                           <a href="{% url 'produits:details-produit' pk=produit.id %}" style="text-decoration: none;color:blue;" ><i title="Afficher les informations du produit" class="fas fa-info-circle"></i></a>&nbsp;&nbsp;&nbsp;
                           <a href="{% url 'produits:modification-produit' pk=produit.id %}"><i title="Mise à jour des informations du produit" class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
                           <a href="{% url 'produits:delete-produit' pk=produit.id %}"  style="color: red;"><i title="Supprimé" class="far fa-trash-alt"></i></a> &nbsp;&nbsp;&nbsp;       
-                          <a href="#"  style="color:blue;"><i title="Stock" class="fas fa-cubes"></i></a> &nbsp;&nbsp;&nbsp;       
+                          <a href="{% url 'produits:update-stock' pk=produit.id %}"  style="color:blue;"><i title="Stock" class="fas fa-cubes"></i></a> &nbsp;&nbsp;&nbsp;       
                           
                         </center>
                       </td>                     

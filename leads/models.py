@@ -1,3 +1,7 @@
+from re import T
+from tkinter import N
+from tkinter.tix import Tree
+from turtle import update
 from django.contrib import messages
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -7,6 +11,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 from produits.models import Produit
+from django.db.models import Q
 
 
 SOURCE_CHOICES = {
@@ -14,7 +19,6 @@ SOURCE_CHOICES = {
         ('Google', 'Google'),
         ('Newsletter', 'Newsletter'),
     }
-
 
 USER_TYPE = {
     ('ve', 'Vendeur'),
@@ -27,7 +31,6 @@ NOTE_STATUS = {
     ('enc', 'En cours'),
 }
 
-
 class User(AbstractUser):
     pass
 
@@ -36,6 +39,18 @@ class Agent(models.Model):
     num_identification = models.CharField(max_length=100, null=True, blank = True)
     user_type = models.CharField(max_length=2, choices=USER_TYPE, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
+
+    tel = models.CharField(max_length=100, null=True, blank=True)
+    adresse = models.CharField(max_length=100, null=True, blank=True)
+
+    id_company = models.IntegerField(null=True, blank=True)
+    has_company = models.BooleanField(default=False, null=True, blank=True)
+
+    lim_note = models.IntegerField(null=True, blank=True)
+    lim_client = models.IntegerField(null=True, blank=True)
+    lim_fournisseur = models.IntegerField(null=True, blank=True)
+    
+
     slug = models.SlugField(null=True, blank=True)
 
     def __str__(self):
@@ -53,7 +68,6 @@ class Agent(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.num_identification)
         super(Agent, self).save(*args, **kwargs)
-
 
 class Lead(models.Model):
 
@@ -84,8 +98,17 @@ TYPE_CLIENT = {
     ('cl', 'Client'),
 }
 
+RDV_STATUS={
+    ('con', 'Confirmé'),
+    ('ann', 'Annulé'),
+    ('att', 'En attante')
+    
+}
+
 class Client(models.Model):
     raison = models.CharField(max_length=100, null=True, blank=True)
+
+    num = models.IntegerField(null=True, blank=True)
 
     nom = models.CharField(max_length=100, null=True, blank=True)
     prenom = models.CharField(max_length=100, null=True, blank=True)
@@ -101,12 +124,18 @@ class Client(models.Model):
     fax = models.CharField(max_length=14, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
 
+    nrc = models.CharField(max_length=50, null=True, blank=True)
+    nif = models.CharField(max_length=50, null=True, blank=True )
+    art = models.CharField(max_length=50, null=True, blank=True)
+
     categorie_client = models.CharField(max_length=1, choices=CAT_CLIENT, null=True, blank=True)
     type_client = models.CharField(max_length=2, choices=TYPE_CLIENT, null=True, blank=True)
     secteur = models.ForeignKey('SecteurActivite', null=True, blank=True, on_delete=models.CASCADE)
 
+    id_comp = models.IntegerField(null=True, blank=True)
+
     created_at = models.DateField(auto_now=True)
-    created_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
     class Meta:
@@ -115,6 +144,26 @@ class Client(models.Model):
 
     def __str__(self):
         return self.raison
+
+class RendezVous(models.Model):
+    client = models.ForeignKey(Client, null=True, blank=True, on_delete=models.CASCADE)
+    date_rendez_vous = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=3, choices=RDV_STATUS, null=True, blank=True)
+    motif = models.CharField(max_length=100, null=True, blank=True)
+    observation = models.TextField(max_length=1000, null=True, blank=True)
+
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    id_comp = models.IntegerField(null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Rendez vous",
+        verbose_name_plural = "Liste des rendez vous"
+
+    def __str__(self):
+        return self.client.raison
 
 TYPE_FOURNISSEUR = {
     ('pa', 'Paticulier'),
@@ -135,6 +184,8 @@ class Fournisseurs(models.Model):
     raison = models.CharField(max_length=1000, null=True, blank=True)
     secteur = models.ForeignKey(SecteurActivite, null=True, blank=True, on_delete=models.DO_NOTHING)
 
+    num = models.IntegerField(null=True, blank=True)
+
     adresse = models.TextField(max_length=2000, null=True, blank=True)
     pays = models.CharField(max_length=100, null=True, blank=True)
     province = models.CharField(max_length=100, null=True, blank=True)
@@ -147,6 +198,8 @@ class Fournisseurs(models.Model):
 
     fournisseur_type = models.CharField(max_length=2, choices=TYPE_FOURNISSEUR, )
     image = models.ImageField(null=True, blank=True)
+
+    id_comp = models.IntegerField(null=True, blank=True)
 
     nis = models.CharField(max_length=300, null=True, blank=True)
     nif = models.CharField(max_length=100, null=True, blank=True)
@@ -188,6 +241,8 @@ ETAT = {
 
 class Devis(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=SET_NULL)
+    num_client = models.CharField(max_length=1000, blank=True, null=True)
+    num = models.IntegerField(null=True, blank=True)
     prospet = models.ForeignKey('Client', null=True, blank=True, on_delete=models.CASCADE)
     status = models.CharField(max_length=3, choices=STATUS_DEVIS, null=True, blank=True)
     lignes_devis = models.ManyToManyField('ProduitsDevis', blank=True)
@@ -204,6 +259,8 @@ class Devis(models.Model):
 
     created_at= models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now = True)
+
+    id_comp = models.IntegerField(null = True, blank=True)
 
     class Meta:
         verbose_name="Devis"
@@ -236,10 +293,16 @@ class ProduitsDevis(models.Model):
     #    return total
 
 class Note(models.Model):
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)   
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE) 
+
+    num = models.IntegerField(null=True, blank=True)
+
+    titre = models.CharField(max_length=100, null=True, blank=True) 
     text_note = models.CharField(max_length=1000, null=True, blank=True)
     slug = models.SlugField(null=True, blank=True)
     state = models.CharField(max_length=3, choices= NOTE_STATUS , null=True, blank=True)
+
+    id_comp = models.IntegerField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -278,6 +341,10 @@ class Tache(models.Model):
     assigner = models.ForeignKey(Agent, null=True, blank=True, on_delete=models.DO_NOTHING)
     is_archived = models.BooleanField(default=False)
 
+    id_comp = models.IntegerField(null=True, blank=True)
+
+    num = models.IntegerField(null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -287,7 +354,7 @@ class Tache(models.Model):
 
     def __str__(self):
         return self.sommaire
-
+    
 class Contact(models.Model):
     created_by = models.ForeignKey(User, on_delete= models.CASCADE)
     sujet = models.TextField(max_length=300, null=True, blank=True)
@@ -301,8 +368,22 @@ class Contact(models.Model):
     def __str__(self):
         return self.created_by
 
+DROITS = (
+    ('lec', 'Lecture'),
+    ('mod', 'Modification'),
+    ('sup', 'Suppréssion'),
+)
 
-    
+class DefineRights(models.Model):
+    agent = models.ForeignKey(Agent, null=True, blank=True, on_delete=models.CASCADE)
+    rights = models.CharField(max_length=3, choices=DROITS, null=True, blank=True)
+
+    class Meta:
+        verbose_name="Droit d'accès"
+        verbose_name_plural="Droits d'accès"
+
+    def __str__(self):
+        return self.agent  
 
 
 

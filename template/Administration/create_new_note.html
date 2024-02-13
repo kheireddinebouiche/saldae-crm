@@ -1,5 +1,6 @@
 {% extends 'Administration/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <!-- Content Wrapper. Contains page content -->
@@ -25,24 +26,20 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-
-        <div class="card">
+        <div class="card col-md-6" style="margin: auto; width: 60%;">
             <div class="card-body">
                 <form method="POST">
                     {% csrf_token %}
-                    {{form.as_p}}        
-               
+                    {{form|crispy}}        
                 <div class="card-footer">
                     <button class="btn btn-primary float-right">Créer la note</button> 
+                    <a href="{% url 'leads:Administration' %}" class="btn btn-warning float-left">Annuller</a> 
                 </div>
 
             </form>
             </div>
             
         </div>
-
-        
-        
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

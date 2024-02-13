@@ -16,6 +16,8 @@ urlpatterns = [
     path('vender-signup/',RegisterVenderUser, name="vender-registration"),
     path('leads/', include('leads.urls', namespace="leads")),
     path('produits/', include('produits.urls', namespace="produits")),
+    path('commandes/', include('commande.urls', namespace="commande")),
+    path('my-company/', include('mycompany.urls', namespace='mycompary')),
    
     
 ]

@@ -1,5 +1,8 @@
+from decimal import Decimal
+from numbers import Number
+from tokenize import Floatnumber
 from django.forms import ModelForm, widgets
-from produits.models import Produit
+from produits.models import *
 from django import forms
 
 
@@ -81,21 +84,10 @@ class AjouterProduit(forms.ModelForm):
             }),
         }
 
-
-class ModifierProduit(forms.ModelForm):
-    
+class ModifierProduit(forms.ModelForm):  
     class Meta:
         model = Produit
-        fields = (
-            "reference",
-            "designation",
-            "type_produit",
-            "cat_produit",
-            "couleur",
-            "poids",
-            "longueur",
-            "largeur",
-            "hauteur",
+        fields = ("reference","designation","type_produit","cat_produit","couleur","poids","longueur","largeur","hauteur",
             "prix",
             "promo",
             "image",
@@ -154,3 +146,24 @@ class ModifierProduit(forms.ModelForm):
             }),
         }
 
+class StockProduitForm(ModelForm):
+    class Meta:
+        model = Stock
+        fields = {'qte','lot','date_fabrication','date_peremption'}
+        widgets = {
+            'qte': widgets.NumberInput(attrs={
+                'class' : 'form-control',
+                'placeholder' : 'Quantité de produit'
+            }),
+            'lot': widgets.TextInput(attrs={
+                'class' : 'form-control',
+                'placeholder' : 'N° de Lot'
+            }),
+            'date_fabrication' : widgets.DateInput(attrs={
+                'class' : 'form-control',
+            }),
+            'date_peremption' : widgets.DateInput(attrs={
+                'class': 'form-control',
+                
+            }),
+        }

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<style>
+    #comp {
+        margin: auto;
+        width:50%;
+        padding: 10px;
+        background-color: white;
+       
+    }
+    .my{
+        display: flex;
+    }
+
+    .form-group{
+        margin-top: 10px;
+    }
+</style>
+
+{% if not request.user.is_authenticated %}
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="my">
+            <div class="card" id="comp">
+               {{user|crispy}}
+            </div> 
+            <div class="card" id="comp">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label>Désignation de l'entreprise :</label><br>
+                            {{company.designation}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label>Adresse :</label><br>
+                            {{company.adresse1}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>N° Rue :</label><br>
+                            {{company.nrue}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Province/Etat :</label><br>
+                            {{company.province}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Etat :</label><br>
+                            {{company.etat}}
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+           
+
+        <button type="button" class="btn btn-success">Créer mon compte</button>
+
+    </form>
+{% else %} 
+    <div class="card" id="form">
+        <div class="card-header">
+            <div class="card-title">
+                Notification
+            </div>
+            <div class="card-body">
+                <h2>Veuillez vous déconnecter pour pouvoir créer un compte.</h2>
+            </div>
+        </div>
+
+    </div>
+{% endif %} 
+    
+{% endblock content %}
+    

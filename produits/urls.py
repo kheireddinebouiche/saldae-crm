@@ -12,5 +12,6 @@ urlpatterns = [
     path('Administration/produit/details-produit/<int:pk>/', View_produit , name="details-produit"),
     path('<int:pk>/Administration/produit/modification-produit/', Update_produit , name="modification-produit"),
     path('<int:pk>/supprimer-produit/',delete_produit, name="delete-produit"),
+    path('Administration/produit/<int:pk>/stock/ajout-stock/',StockUpdate, name="update-stock"),
      
 ]

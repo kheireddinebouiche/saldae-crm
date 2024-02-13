@@ -1,52 +1,55 @@
+from statistics import mode
+from tkinter import N
 from django.db import models
 from produits.models import Produit
 from leads.models import Lead
 from django.dispatch import receiver
 from django.template.defaultfilters import slugify
+from leads.models import User
+from leads.models import Fournisseurs
 
 
 
-PAIEMENT = {
-    ('atr', 'A terme'),
-    ('30j', '30 Jours'),
-    ('40j', '40 Jours'),
-    ('60j', '60 Jours'),
+
+
+class LigneDeCommande(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    item = models.ForeignKey(Produit, on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.IntegerField(default=0, null=True, blank=True)
+    prix = models.FloatField(null=True, blank=True)
+
+    is_done = models.BooleanField(default=False)
     
-}
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-STATUS = {
-    ('att', 'En attente'),
-    ('con', 'Confirmer'),
-    ('val', 'Valider'),
-    ('ann', 'Annuler'),
-}
-
-class LigneBonCommande(models.Model):
-    produit = models.ForeignKey(Produit, on_delete=models.CASCADE, null=True, blank=True)
+    class Meta:
+        verbose_name='Ligne de commande'
+        verbose_name_plural='Lignes de commandes'
 
     def __str__(self):
-        return self.produit.reference
+        return self.item.designation
 
-def increment_order_id():
-        dernier_order = BonDeCommande.objects.all().order_by('id').last()
-        if not dernier_order:
-            return 'Bon de commande N° :/' + '1'
-        id_commande = dernier_order.id_commande
-        item_order_nb = int(id_commande.split('Bon de commande N° :/')[-1])
-        n_item_order_nb = item_order_nb + 1
-        n_item_order_id = 'Bon de commande N° :/' + str(n_item_order_nb)
-        return n_item_order_id
+       
 
-class BonDeCommande(models.Model):
-    id_commande = models.CharField(max_length=1000,default=increment_order_id, null=True, blank=True)
-    date_commande = models.DateField()
-    adresse_livraison = models.CharField(max_length=1000, null=True, blank=True)
-    observation = models.CharField(max_length=1000, null=True, blank=True)
-    delai_paiement = models.CharField(max_length=3, choices=PAIEMENT, null=True, blank=True)
-    ligne_commande = models.ManyToManyField(LigneBonCommande)
-    client = models.ForeignKey(Lead, on_delete=models.CASCADE)
-    status = models.CharField(max_length=3, choices=STATUS, null=True, blank=True)
+class CommandeFournisseur(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    fournisseur = models.ForeignKey(Fournisseurs, on_delete=models.CASCADE, null=True, blank=True)
+    items = models.ManyToManyField(LigneDeCommande)
+    total = models.FloatField(null=True, blank=True)
+
+    is_done = models.BooleanField(default=False)
     
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name='Commande de produit'
+        verbose_name_plural='Commandes de produits'
+
     def __str__(self):
-        return self.id_commande
+        return self.user.username
+
+
+
 

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SALDAE CRM</title>
-
+  <link rel="stylesheet" href="{% static 'admin/assets/css/bootstrap.css' %}">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -37,6 +37,9 @@
   <link rel="stylesheet" href="{% static 'admin/plugins/daterangepicker/daterangepicker.css' %}">
   <!-- summernote -->
   <link rel="stylesheet" href="{% static 'admin/plugins/summernote/summernote-bs4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'admin/assets/css/bootstrap.css' %}">
+  <!-- Bootstrap CSS -->
+ 
 </head>
 <body class="sidebar-mini layout-fixed control-sidebar-slide-close layout-navbar-fixed">
 
@@ -48,20 +51,16 @@
 
     {% include 'Administration/navbar.html' %}
     {% include 'Administration/asside.html' %}
-    {% include 'Administration/message.html' %} 
+    {% include 'Administration/message.html' %}
 
     {% block content %}
-       
+    
        
     {% endblock content %}
 
     {% include 'Administration/footer.html' %}
 
-        <!-- Control Sidebar -->
-            <aside class="control-sidebar control-sidebar-dark">
-                <!-- Control sidebar content goes here -->
-            </aside>
-        <!-- /.control-sidebar -->
+        
 </div>
 
     {% include 'Administration/scripts.html' %}

@@ -1,11 +1,52 @@
-{% extends 'base.html' %}
+{% extends 'front/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Se connecter</button>
-    </form>
+<style>
+    #log{
+        margin-top: 30px;
+    }
+
+    hr{
+        width: 50%;
+        margin: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+</style>
+
+
+  <main id="main">
+    <section id="log">
+        <div class="container">
+            <div class="card" style="margin: auto; width: 50%; border: 0px;">
+                <div class="card-header" style="background-color: white;">
+                    <div class="card-title"> 
+                         
+                        <h3 style="text-align:center;">Authentification</h3>
+                        
+                    </div>
+                </div>
+                
+                <div class="card-body" style="border: 0px;">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                </div>                            
+                <div class="card-footer text-center">
+                    <button type="submit" class="btn btn-primary">Se connecter</button> 
+                    <hr>
+                    <span>Vous n'avez pas de compte ?</span>
+                        <a class="btn-getstarted scrollto" href="{% url 'leads:home_page' %}#pricing">S'inscrire</a>
+                    </div>  
+                 </form>              
+            </div>   
+        </div>
+    </section>  
+  </main>
+
+
+    
     
 {% endblock content %}

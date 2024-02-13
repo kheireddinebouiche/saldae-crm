@@ -1,0 +1,102 @@
+{% extends 'Administration/base.html' %}
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    {% include 'Administration/message.html' %} 
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Liste des commandes</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/leads/Administration/">Gestion des commandes</a></li>
+              <li class="breadcrumb-item active">Liste des commandes</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content"> 
+        <label for="fil" style="margin-left: 10px;">Filtrage par :</label>
+        <div id="fil" class="row" style="margin: auto;">
+            <div class="form-group col-md-3">
+              <input type="search" class="form-control"  placeholder="Référence de la commande" id="ref_prd"/>
+            </div>
+            <div class="form-group col-md-3">
+              <input type="search" class="form-control"  placeholder="Nom du fournisseur" id="des_prd"/>
+            </div>
+            
+            <div class="from-group">
+                <input type="submit" class="btn btn-primary" value="Rechercher">
+            </div>
+        
+        </div> 
+       <hr> 
+      <div class="container-fluid">  
+        <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <span><b>Exporter : </b><a href="#" class="btn btn-success">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a></span>          
+                  <span><b>Importer :</b></span>                
+                  <a href="#" class="btn btn-success">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a>
+                  <a href="{% url 'commande:ajouter-commande' %}" class="btn btn-primary">Ajouter une commande</a>
+                  <br>
+                  <br>
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th>ID.</th>
+                      <th>Fournisseur</th>
+                      <th>Prix</th>
+                      <th>Date de création</th>
+                      <th>Dérniere modification</th>                      
+                      <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for commande in commandes %}
+                    <tr class="text-center">
+                      <td>{{commande.id}}</td>
+                      <td>{{commande.fournisseur}}</td>
+                      <td>{{commande.total}}</td>
+                      <td>{{commande.created_at}}</td>
+                      <td>{{commande.updated_at}}</td>                    
+                      <td>
+                          <center>
+                          <a href="#" style="text-decoration: none;color:blue;" ><i title="Afficher les informations du produit" class="fas fa-info-circle"></i></a>&nbsp;&nbsp;&nbsp;
+                          <a href="#"><i title="Mise à jour des informations du produit" class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                          <a href="#"  style="color: red;"><i title="Supprimé" class="far fa-trash-alt"></i></a> &nbsp;&nbsp;&nbsp;       
+                          <a href="#"  style="color:blue;"><i title="Stock" class="fas fa-cubes"></i></a> &nbsp;&nbsp;&nbsp;       
+                          
+                        </center>
+                      </td>                     
+                    </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>          
+      </div>                
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+
+{% endblock content %}
+    

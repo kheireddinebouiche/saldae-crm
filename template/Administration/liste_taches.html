@@ -1,5 +1,6 @@
 {% extends 'Administration/base.html' %} 
 {% load static %} 
+{% load crispy_forms_tags %}
 {% block content %} 
 
 
@@ -75,14 +76,14 @@
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3>65</h3>
+                  <h3>{{tache_non_ass.count}}</h3>
   
                   <p>Taches non Assigné</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="#" class="small-box-footer">Plus d'informations <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{% url 'leads:tache-non-assigner' %}" class="small-box-footer">Plus d'informations <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -103,7 +104,7 @@
                   <div class="card-header">
                       <center>
                         <a href="{% url 'leads:ajouter_tache' %}" class="btn btn-success mr-1">Créer une tache</a>
-                        <a href="" class="btn btn-warning mr-1">Assigner une tache</a>
+                        <a href="{% url 'leads:tache-non-assigner' %}" class="btn btn-warning mr-1">Assigner une tache</a>
                       </center>
                   </div>
                 <table id="example2" class="table table-bordered table-hover">
@@ -120,7 +121,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                    {% if not taches.is_empty %}
+                    {% if taches.count > 0 %}
                         {% for t in taches %}
                         <tr>    
                                 <td>{{t.id}}</td>

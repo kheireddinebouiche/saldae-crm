@@ -1,0 +1,86 @@
+{% extends 'front/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style>
+  hr{
+    margin: auto;
+    width: 50%;
+    margin-top: 10px;
+    margin-bottom: 6px;    
+  }
+</style>
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top" data-scrollto-offset="0">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+
+    <a href="/" class="logo d-flex align-items-center scrollto me-auto me-lg-0">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1>HeroBiz<span>.</span></h1>
+    </a>
+
+    <nav id="navbar" class="navbar">
+      <ul>   
+        <li><a class="nav-link scrollto" href="/">Accueil</a></li>
+        <li><a class="nav-link scrollto" href="index.html#about">A propos</a></li>
+        <li><a class="nav-link scrollto" href="index.html#services">Fonctionnalités</a></li>
+        <li><a class="nav-link scrollto" href="index.html#contact">Contact</a></li>
+        <li><a class="nav-link scrollto" href="index.html#faq">FAQ ?</a></li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle d-none"></i>
+    </nav><!-- .navbar -->
+
+    {% if not request.user.is_authenticated %}
+    <nav class="navbar">
+      <ul> 
+        <a class="btn-getstarted scrollto" href="{% url 'leads:home_page' %}">S'inscrire</a>
+        <li><a class="nav-link" href="{% url 'login' %}">Connexion</a></li>    
+      </ul>
+    </nav>
+    {% else %} 
+      <nav class="navbar">
+        <ul> 
+          <a class="btn-getstarted scrollto" href="{% url 'leads:Administration' %}">Tableau de bord</a>
+          <li><a class="nav-link" href="{% url 'logout' %}">Déconnexion</a></li>    
+        </ul>
+      </nav>  
+    {% endif %}
+
+  </div>
+</header><!-- End Header -->
+
+<main id="main">
+    <section class="content" style="margin-top: 20px;">
+        <div class="container-fluid">
+           <div class="card" style="margin: auto; width: 50%; border: 0px;">
+             <div class="card-header">
+               <div class="card-title">
+                <h3 class="text-center">Créer un compte</h3>
+               </div>        
+             </div>
+               <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                        {{form1|crispy}}
+                        
+                        {{form|crispy}} 
+                </div>  
+                <div class="card-footer text-center">
+                  <input type="submit" class="btn btn-success" value="Créer mon compte">
+                  <hr>
+                  <span>Vous avez déja un compte ?</span>
+                        <a class="btn-getstarted scrollto" href="{% url 'login' %}">Se connecter</a>
+                    </div>  
+                </div>                  
+                </form>
+               
+            
+            </div>
+        </div>
+    
+    </section>
+</main>
+    
+{% endblock content %}
+    

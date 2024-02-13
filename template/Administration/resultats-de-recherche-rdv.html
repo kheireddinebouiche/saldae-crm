@@ -1,0 +1,17 @@
+{% extends 'Administration/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+   
+   
+   {% if object_list %}
+        {% for o in object_list %}
+        {{o.id}}
+        {% endfor %}
+   {% else %}
+        <center><span>Aucun résultats trouver !</span></center>
+   {% endif %}
+    
+   
+    
+    
+{% endblock content %}

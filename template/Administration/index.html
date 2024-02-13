@@ -31,14 +31,14 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{client}}</h3>
 
-                <p>New Orders</p>
+                <p>Nombre de Clients</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{% url 'leads:list-dossier' %}" class="small-box-footer">Voir plus <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -46,14 +46,14 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>{{fournisseur}}</sup></h3>
 
-                <p>Bounce Rate</p>
+                <p>Nombre de fournisseurs</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{% url 'leads:liste-fournisseur' %}" class="small-box-footer">Voir plus <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -61,14 +61,14 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{produit}}</h3>
 
-                <p>User Registrations</p>
+                <p>Nombre de produit</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{% url 'produits:liste-produits' %}" class="small-box-footer">Voir plus <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -76,23 +76,108 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3>1</h3>
 
-                <p>Unique Visitors</p>
+                <p>Agent Connectés</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">Voir plus <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
         </div>
         <!-- /.row -->
         <!-- Main row -->
+        {% if not company %}
         <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  Notification(s)
+                </h3>
+              </div>
+              <div class="card-body">
+                  Veuillez completer la configuration des informations de votre entreprise. <a href="{% url 'mycompany:configurer-mon-entreprise' %}">Cliquez ici</a>
+              </div>  
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="row">
+          <!--Right col-->
+          <section class="col-lg-6 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->     
+            <!-- TO DO List -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  Mes notes
+                </h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <ul class="todo-list" data-widget="todo-list">
+
+                  {% for note in note %}
+                  <li>
+                    <!-- drag handle -->
+                    <span class="handle">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <!-- checkbox -->
+                    <div  class="icheck-primary d-inline ml-2">
+                      <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                      <label for="todoCheck1"></label>
+                    </div>
+                    <!-- todo text -->
+                    <span class="text">{{note.text_note}}</span>
+                    <!-- Emphasis label -->
+                    <small class="badge badge-danger"><i class="far fa-clock"></i>{{note.created_at}}</small>
+                    <!-- General tools such as edit or delete-->
+                    <div class="tools">
+                      <a href="{% url 'leads:update-note' note.pk %}" style="color: red;" ><i class="fas fa-edit"></i></a>
+                      <a href="{% url 'leads:delete-note' note.pk %}" style="color: red;"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </li>
+                  
+                  {% empty %}
+
+                  <li>
+                    <!-- drag handle -->
+                    
+                    <!-- todo text -->
+                    <span class="text">Aucune tâche en cours.</span>
+                    <!-- Emphasis label -->
+                  
+                  </li>
+
+                  {% endfor %}
+                </ul>
+              </div>
+              <!-- /.card-body -->
+              
+            </div>
+            <!-- /.card -->
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content"></div>
+              </div>
+            </div>
+            
+            
+          </section>
+          <!-- /.Right col-->
+
           <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
+          <section class="col-lg-6 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->     
             <!-- TO DO List -->
             <div class="card">
@@ -144,14 +229,17 @@
                 </ul>
               </div>
               <!-- /.card-body -->
-              <div class="card-footer clearfix">
+              <div class="card-footer ">
                 <a href="{% url 'leads:create-note' %}" type="button" class="btn btn-info float-right"><i class="fas fa-plus"></i> Créer une note</a>
               </div>
             </div>
             <!-- /.card -->
+
+  
+            
+            
           </section>
-          <!-- /.Left col -->
-          
+          <!-- /.Left col -->        
         </div>
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
@@ -160,12 +248,12 @@
 
   </div>
   <!-- /.content-wrapper -->
-
 </div>
 <!-- ./wrapper -->
 
 
-  {% endblock content %}
+  
+{% endblock content %}
 
 
 

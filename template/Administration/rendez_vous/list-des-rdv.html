@@ -1,0 +1,111 @@
+{% extends 'Administration/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Géstion des rendez vous</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/leads/Administration/">Rendez vous</a></li>
+              <li class="breadcrumb-item active">Liste des rendez-vous</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <form method="POST">
+                {% csrf_token %}
+              <div class="card-header">
+                  Filtrage des rendez-vous
+              </div>
+              <div class="card-body">
+                  <input type="text" name="q" placeholder="Veuillez saisir le nom du client ..." />
+
+                  
+                  <a href="{% url 'leads:recherche-rdv' %}" class="btn btn-warning">Filtrer</a>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+
+                      <th>Désignation client/Nom</th>
+                      <th>Date rendez-vous</th>
+                      <th>Status</th>
+                      <th>Créer le </th>
+                      <th>Modifier le </th>
+                      <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      
+                      {% if resultats %}
+                           
+                        {% for result in resultats %}
+                            <tr>
+                            <td>{{result.client}}</td>
+                            <td>{{result.date_rendez_vous}}</td>
+                            <td>{{result.get_status_display}}</td>
+                            <td>{{result.created_at}}</td>
+                            <td>{{result.updated_at}}</td> 
+                            <td>
+                                <center>
+                                    <a href="{% url 'leads:miseajour-rendez-vous' result.pk %}"><i title="Mise à jour des informations de l'utilisateur" class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                                    <a href="{% url 'leads:supp-rendez-vous' result.pk %}" ><i title="Supprimé" class="far fa-trash-alt"></i></a> &nbsp;&nbsp;&nbsp;
+                                    <a href="{% url 'leads:details-rendez-vous' result.pk %}" ><i title="Afficher les informations du rendez-vous" class="fas fa-info-circle"></i></a> &nbsp;&nbsp;&nbsp;
+                                
+                                </center>
+                            </td>                     
+                            </tr>
+                        {% endfor %}
+                      
+                      {% else %}
+                            <tr>
+                              <td colspan='6' class="text-center h5">Aucun rendez-vous disponible.</td>
+                            </tr>
+                            <tr>
+                              <td colspan='6'><a href="{% url 'leads:ajouter-rendez-vous' %}" class="btn btn-warning">Créer un rendez-vous</a></td>
+                            </tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+           
+      </div>
+                
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+{% endblock content %}

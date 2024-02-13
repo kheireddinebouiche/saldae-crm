@@ -1,197 +1,7 @@
-{% load static %}
-
 {% extends 'Administration/base.html' %}
+{% load static %}
   
 {% block content %}
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="{% url 'leads:Enter-Admin' %}" class="brand-link">
-      <img src="{% static 'admin/dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Saldae CRM</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{% static 'admin/dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">{{request.user}}</a>
-        </div>
-      </div>
-
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Rechercher" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item ">
-            <a href="{% url 'leads:Enter-Admin' %}" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Tableau de bord             
-              </p>
-            </a>           
-          </li>
-
-        <!-- Gestion des pistes -->
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-             Opportunitées
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fas fa-folder-plus nav-icon"></i>
-                <p>Nouvelle piste</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fas fa-folder-open nav-icon"></i>
-                <p>Pistes actives</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fas fa-file-archive nav-icon"></i>
-                <p>Pistes archivées</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fas fa-list-ul nav-icon"></i>
-                <p>Liste des pistes</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!-- fin gestion des pistes -->
-         
-         <!-- Gestion des clients -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                Clients
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  
-                  <i class="fas fa-user-plus nav-icon"></i>
-                  <p>Ajouter un client</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  
-                  <i class="fas fa-address-book nav-icon"></i>
-                  <p>Liste des clients</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-         <!-- Fin gestion des client -->
-
-          <!-- Bon de commande -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
-              <p>
-                Commandes
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-folder-plus nav-icon"></i>
-                  <p>Bon de commande</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-file-invoice-dollar nav-icon"></i>
-                  <p>Factures</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Produits</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!-- Fin bon de commande -->
-
-          <!-- Gestion des produits -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-               Gestion des produits
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-folder-plus nav-icon"></i>
-                  <p>Nouveau produit</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-list nav-icon"></i>
-                  <p>Liste des produits</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-box-open nav-icon"></i>
-                  <p>Stock</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-sync nav-icon"></i>
-                  <p>Mouvements</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!-- fin gestion des produits -->           
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -200,12 +10,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Formulaire de création de note</h1>
+            <h1 class="m-0">Formulaire de modification de note</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-              <li class="breadcrumb-item active">Création de note</li>
+              <li class="breadcrumb-item active">Modification</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -217,22 +27,19 @@
     <section class="content">
       <div class="container-fluid">
 
-        <div class="card">
+        <div class="card col-lg-6" style="margin: auto; width: 60%;">
             <div class="card-body">
                 <form method="POST">
                     {% csrf_token %}
                     {{form.as_p}}                      
                 <div class="card-footer">
-                    <button class="btn btn-primary float-right">Modifier la note</button> 
+                    <button class="btn btn-primary float-right">Modifier la note</button>
+                    <a href="{% url 'leads:liste-des-notes' %}" class="btn btn-warning float-left">Annuller</a> 
                 </div>
 
             </form>
-            </div>
-            
-        </div>
-
-        
-        
+            </div>          
+        </div>       
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

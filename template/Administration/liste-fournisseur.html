@@ -1,6 +1,7 @@
 {% extends 'Administration/base.html' %} 
 {% load static %} 
-{% block content %} 
+{% block content %}
+ 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -28,11 +29,24 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <span><b>Exporter : </b><a href="#" class="btn btn-success">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a></span>
+                <div class="form-row col-lg-12">
+                <span><b>Exporter : </b><a href="{% url 'leads:export-xls-fournisseur' %}" class="btn btn-success">XLS</a> <a href="{% url 'leads:export-csv-fournisseur' %}" class="btn btn-success mr-3">CSV</a></span>
                 
-                <span><b>Importer :</b></span>                
-                <a href="#" class="btn btn-success">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a>
+                <span><b>Importer :</b>              
+                <a href="#" class="btn btn-success">XLS</a> <a href="#" class="btn btn-success mr-3">CSV</a></span>  
                 <a href="{% url 'leads:ajouter-fournisseur' %}" class="btn btn-primary">Ajouter un fournisseur</a>
+                <form class="ml-3" action="{% url 'leads:recherche-fournisseurs' %}" method="get">
+                  <div class="input-group">
+                    <div class="form-outline">
+                      <input placeholder="Raison / Dérigeant" type="search" name="q" id="form1" class="form-control" />
+                      
+                    </div>
+                    <button type="button" class="btn btn-primary">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>    
+                </form> 
+                </div>
                 <br>
                 <br>
                 <br>
@@ -49,7 +63,7 @@
                   </thead>
                   <tbody>
 
-                    {% if fournisseurs.count != null %}
+                    {% if fournisseurs.count  %}
                       {% for f in fournisseurs %} 
                         <tr class="text-center">
                           <td>{{f.id}}</td>
@@ -69,7 +83,7 @@
                       {% endfor %} 
                     {% else %} 
                         <tr>
-                          <td colspan="6"><center><h3>Aucun fournisseur trouver</h3></center></td>
+                          <td colspan="6"><center><h5>Aucun fournisseur trouver</h5></center></td>
                         </tr>
                     {% endif %}
                   </tbody>

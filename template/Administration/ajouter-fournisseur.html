@@ -112,7 +112,10 @@
                 <hr>
               </div>                 
               <div class="card-footer">
-                 <center><input type="submit" class="btn btn-primary" value="Ajouter le client" /> </center>
+                 <center>
+                   <a href="{% url 'leads:liste-fournisseur' %}" class="btn btn-warning text-white" style="width: 120px;">Annulé</a>
+                   <input type="submit" class="btn btn-primary" value="Ajouter le client" /> 
+                 </center>
               </div>
 
            </form>

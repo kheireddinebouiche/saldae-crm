@@ -1,0 +1,91 @@
+{% extends 'Administration/base.html' %}
+
+{% block content %}
+   <!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+            
+          <div class="col-sm-6">
+            <h1>Liste des notes</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Mes Notes</a></li>
+              <li class="breadcrumb-item active">Liste des notes</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                  <div class="card-header">
+                      <center>
+                        <a href="{% url 'leads:create-note' %}" class="btn btn-success mr-1">Créer une note</a>
+                      </center>
+                  </div>
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr class="text-center">
+                    <th>ID. #</th>
+                    <th>Titre</th>
+                    <th>Date de création</th>
+                    <th>Date de modification </th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% if note.count > 0 %}
+                        {% for n in note %}
+                        <tr>    
+                                <td>{{n.num}}</td>
+                                <td>{{n.titre}}</td>
+                                <td>{{n.created_at}}</td>
+                                <td>{{n.updated_at}}</td>
+                                <td>
+                                    <center>
+                                        <a href="{% url 'leads:update-note' n.pk %}" style="text-decoration: none;  color: blue"><i title="Modifier les informations de la note" class="far fa-edit"></i></a>
+                                        <a href="{% url 'leads:delete-note' n.pk %}" style="text-decoration: none; color: red;"><i title="Supprimer la note" class="fas fa-trash"></i></a>
+                                        <a href="{% url 'leads:details-de-la-note' n.pk %}" style="color: blue;"><i title="Afficher les informations de la note" class="fas fa-info-circle"></i></a>
+                                    </center>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %} 
+                        <tr>
+                            <td colspan="8" class="text-center">Aucune note n'a été créer pour le moment.</td>
+                        </tr>
+                    {% endif %}
+
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper --> 
+{% endblock content %}
+    

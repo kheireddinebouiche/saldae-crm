@@ -7,8 +7,9 @@
         <span class="ml-3 text-xl">Saldae CRM</span>
       </a>
       <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-        <a  href="{% url 'leads:lead_list' %}"class="mr-5 hover:text-gray-900">Les prospects</a>
-        <a  href="{% url 'produits:ajouter-produit' %}"class="mr-5 hover:text-gray-900">Nouveau produit</a>
+        <a  href="/"class="mr-5 hover:text-gray-900">Accueil</a>
+        <a  href="{% url 'leads:plan' %}"class="mr-5 hover:text-gray-900">Tarification</a>
+        <a  href="#"class="mr-5 hover:text-gray-900">Contact</a>
 
         {% if not request.user.is_authenticated %}
 
@@ -26,7 +27,7 @@
           </svg>
           </a>
 
-          {% if request.user.agent.user_type == "ad" %}
+          {% if request.user.agent.user_type == "ad" or request.user.is_staff %}
           <a href="{% url 'leads:Administration' %}" class=" ml-3 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-yellow-200 rounded text-base mt-4 md:mt-0">Administration</a>
           {% endif %}
 

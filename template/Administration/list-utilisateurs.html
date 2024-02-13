@@ -46,17 +46,17 @@
                         {% for agent in agents %}
                     <tr>
                       <td>{{agent.id}}</td>
-                      <td>{{agent.agent.num_identification}}</td>
-                      <td>{{agent.first_name}}</td>
-                      <td>{{agent.last_name}}</td>
-                      <td>{{agent.email}}</td>
-                      <td>{{agent.agent.get_user_type_display}}</td> 
+                      <td>{{agent.num_identification}}</td>
+                      <td>{{agent.user.first_name}}</td>
+                      <td>{{agent.user.last_name}}</td>
+                      <td>{{agent.user.email}}</td>
+                      <td>{{agent.get_user_type_display}}</td> 
                       <td>
                           <center>
                           <a href="{% url 'leads:update-agent' agent.pk %}"><i title="Mise à jour des informations de l'utilisateur" class="far fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
                           <a href="{% url 'leads:delete-user' agent.pk %}"  style="color: red;"><i title="Supprimé" class="far fa-trash-alt"></i></a> &nbsp;&nbsp;&nbsp;
                           
-                          {% if agent.is_active %} 
+                          {% if agent.user.is_active %} 
                               <a href="{% url 'leads:deactivate-user' agent.pk %}"><i title="Désactiver le compte utilisateur" class="fas fa-unlink" style="color: red;"></i></a>
                           {% else %}    
                               <a href="{% url 'leads:activate-user' agent.pk %}"><i title="Activer le compte utilisateur" class="fas fa-check-circle" style="color: greenyellow;"></i></a>

@@ -1,0 +1,52 @@
+{% extends 'Administration/base.html' %} 
+{% load static %} 
+{% block content %} 
+ 
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Vos résultats de recherche :</h1>
+             
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <a href="{% url 'leads:list-dossier' %}" class="btn btn-warning float-right" >Retour</a>
+          </div>
+          <!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+              
+              {% if object_list %}
+                  {% for o in object_list %} 
+                    {{o.raison}} / {{o.id}}
+                  {% endfor %}
+              {% else %}
+              <span>Aucun resultats n'a été trouver.</span> 
+              {% endif %}
+                
+              
+            </div>
+        </div>
+        
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+</div>
+<!-- ./wrapper -->
+
+ {% endblock content %} 

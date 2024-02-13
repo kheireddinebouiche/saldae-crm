@@ -1,59 +1,87 @@
 {% load static %}
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="{% url 'leads:Administration' %}" class="brand-link">
-      <img src="{% static 'admin/dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Saldae CRM</span>
-    </a>
+  <!-- Brand Logo -->
+  <a href="{% url 'leads:Administration' %}" class="brand-link">
+    <img
+      src="{% static 'admin/dist/img/AdminLTELogo.png' %}"
+      alt="AdminLTE Logo"
+      class="brand-image img-circle elevation-3"
+      style="opacity: 0.8"
+    />
+    <span class="brand-text font-weight-light">Saldae CRM</span>
+  </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          {% if request.user.agent.image.url != null %}
-           <a href="% url 'leads:mon-profile' %}"><img src="{{request.user.agent.image.url}}" class="img-circle elevation-2" alt="Mon profile"></a>
-          {% else %}
-            <a href="{% url 'leads:mon-profile' %}" style="text-decoration: none;"><img src="{% static 'admin/dist/img/user-profile.png' %}" class="img-circle elevation-2" alt="Mon profile"></a>
-          {% endif %}
-        </div>
-        <div class="info">
-          <a href="{% url 'leads:mon-profile' %}" title="Voir mon profile" class="d-block">{{request.user}}</a>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        {% if request.user.agent.image.url != null %}
+        <a href="% url 'leads:mon-profile' %}"
+          ><img
+            src="{{request.user.agent.image.url}}"
+            class="img-circle elevation-2"
+            alt="Mon profile"
+        /></a>
+        {% else %}
+        <a href="{% url 'leads:mon-profile' %}" style="text-decoration: none"
+          ><img
+            src="{% static 'admin/dist/img/user-profile.png' %}"
+            class="img-circle elevation-2"
+            alt="Mon profile"
+        /></a>
+        {% endif %}
+      </div>
+      <div class="info">
+        <a
+          href="{% url 'leads:mon-profile' %}"
+          title="Voir mon profile"
+          class="d-block"
+          >{{request.user}}</a
+        >
+      </div>
+    </div>
+
+    <!-- SidebarSearch Form -->
+    <div class="form-inline">
+      <div class="input-group" data-widget="sidebar-search">
+        <input
+          class="form-control form-control-sidebar"
+          type="search"
+          placeholder="Rechercher"
+          aria-label="Search"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-sidebar">
+            <i class="fas fa-search fa-fw"></i>
+          </button>
         </div>
       </div>
+    </div>
 
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Rechercher" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul
+        class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false"
+      >
+        <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item ">
-            <a href="{% url 'leads:Administration' %}" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Tableau de bord             
-              </p>
-            </a>           
-          </li>
+        <li class="nav-item">
+          <a href="{% url 'leads:Administration' %}" class="nav-link active">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>Tableau de bord</p>
+          </a>
+        </li>
 
         <!-- Mon agenda -->
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="fa fa-calendar nav-icon"></i>
             <p>
-             Calendrier
+              Calendrier
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
@@ -67,19 +95,112 @@
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="fas fa-folder-plus nav-icon"></i>
-                <p>Liste des événements </p>
+                <p>Liste des événements</p>
               </a>
-            </li>          
+            </li>
           </ul>
         </li>
         <!-- fin mon agenda -->
+
+        <!-- Mes notes -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-sticky-note nav-icon"></i>
+            <p>
+              Mes notes
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'leads:liste-des-notes' %}" class="nav-link">
+                <i class="fas fa-tasks nav-icon"></i>
+                <p>Liste des notes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'leads:create-note' %}" class="nav-link">
+                <i class="fas fa-folder-plus nav-icon"></i>
+                <p>Créer une note</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- fin mes notes -->
+
+        <!--TÂCHE-->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-clipboard-check nav-icon"></i>
+            <p>
+              Tâches
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'leads:ajouter_tache' %}" class="nav-link">
+                <i class="fas fa-plus-square nav-icon"></i>
+                <p>Nouvelle Tâche</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'leads:list-taches' %}" class="nav-link">
+                <i class="fas fa-list-ul nav-icon"></i>
+                <p>Liste des tâches</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="{% url 'leads:list-taches-archivees' %}"
+                class="nav-link"
+              >
+                <i class="far fa-file-archive nav-icon"></i>
+                <p>Taches Archivées</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fas fa-sync nav-icon"></i>
+                <p>Assigné un tâche</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!--FIN TACHES-->
+
+        <!--RENDEZ VOUS-->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-clipboard-check nav-icon"></i>
+            <p>
+              Rendez vous
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'leads:ajouter-rendez-vous' %}" class="nav-link">
+                <i class="fas fa-plus-square nav-icon"></i>
+                <p>Créer un rendez-vous</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'leads:list-rendez-vous' %}" class="nav-link">
+                <i class="fas fa-list-ul nav-icon"></i>
+                <p>Liste des rendez-vous</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!--FIN RENDEZ VOUS-->
 
         <!-- Gestion des pistes -->
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-edit"></i>
             <p>
-             Opportunitées
+              Opportunitées
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
@@ -111,40 +232,36 @@
           </ul>
         </li>
         <!-- fin gestion des pistes -->
-         
-         <!-- Gestion des clients -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                Clients
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'leads:add-client' %}" class="nav-link">
-                  
-                  <i class="fas fa-user-plus nav-icon"></i>
-                  <p>Ajouter un client</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'leads:list-dossier' %}" class="nav-link">
-                  
-                  <i class="fas fa-address-book nav-icon"></i>
-                  <p>Liste des clients</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-         <!-- Fin gestion des client -->
 
-         <!-- GESTION DE FOURNISSEURS -->
-         <li class="nav-item">
+        <!-- Gestion des clients -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+              Clients
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'leads:add-client' %}" class="nav-link">
+                <i class="fas fa-user-plus nav-icon"></i>
+                <p>Ajouter un client</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'leads:list-dossier' %}" class="nav-link">
+                <i class="fas fa-address-book nav-icon"></i>
+                <p>Liste des clients</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- Fin gestion des client -->
+
+        <!-- GESTION DE FOURNISSEURS -->
+        <li class="nav-item">
           <a href="{% url 'leads:liste-fournisseur' %}" class="nav-link">
-            
             <i class="nav-icon fas fa-users"></i>
             <p>
               Fournisseurs
@@ -154,19 +271,18 @@
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="{% url 'leads:ajouter-fournisseur' %}" class="nav-link">
-                
                 <i class="fas fa-user-plus nav-icon"></i>
                 <p>Ajouter un Fournisseur</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'leads:liste-fournisseur' %}" class="nav-link">    
+              <a href="{% url 'leads:liste-fournisseur' %}" class="nav-link">
                 <i class="fas fa-address-book nav-icon"></i>
                 <p>Liste des Fournisseurs</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">    
+              <a href="{% url 'commande:list-commandes' %}" class="nav-link">
                 <i class="fas fa-address-book nav-icon"></i>
                 <p>Etats des commandes</p>
               </a>
@@ -174,211 +290,151 @@
           </ul>
         </li>
 
-         <!-- FIN GESTION DE FOURNISSEURS -->
+        <!-- FIN GESTION DE FOURNISSEURS -->
 
-          <!-- Bon de commande -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-file-invoice nav-icon"></i>
-              <p>
-                Ventes
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'leads:nouveau-devis' %}" class="nav-link">
-                  <i class="fas fa-folder-plus nav-icon"></i>
-                  <p>Créer un devis</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'leads:liste-des-devis' %}" class="nav-link">
-                  <i class="fas fa-folder-plus nav-icon"></i>
-                  <p>Liste des devis</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-folder-plus nav-icon"></i>
-                  <p>Bon de commande</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-file-invoice-dollar nav-icon"></i>
-                  <p>Factures</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Produits</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!-- Fin bon de commande -->
+        <!-- Bon de commande -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-file-invoice nav-icon"></i>
+            <p>
+              Ventes
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'leads:nouveau-devis' %}" class="nav-link">
+                <i class="fas fa-folder-plus nav-icon"></i>
+                <p>Créer un devis</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'leads:liste-des-devis' %}" class="nav-link">
+                <i class="fas fa-folder-plus nav-icon"></i>
+                <p>Liste des devis</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fas fa-folder-plus nav-icon"></i>
+                <p>Bon de commande</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fas fa-file-invoice-dollar nav-icon"></i>
+                <p>Factures</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Produits</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- Fin bon de commande -->
 
-          {% if request.user.agent.user_type == 'ad' %}
-          <!-- Gestion des utilisateurs -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-users-cog nav-icon"></i>
-              <p>
-               Gestion des utilisateurs
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'leads:add-user-1' %}" class="nav-link">
-                  <i class="fas fa-user-plus nav-icon"></i>
-                  <p>Ajouter un utilisateur</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'leads:list-utilisateur' %}" class="nav-link">
-                  <i class="fas fa-list nav-icon"></i>
-                  <p>Liste des utilisateurs</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!-- fin gestion des utilisateurs -->
-          {% endif %}
+        {% if request.user.agent.user_type == 'ad' or request.user.is_staff %}
+        <!-- Gestion des utilisateurs -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-users-cog nav-icon"></i>
+            <p>
+              Gestion des utilisateurs
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'leads:add-user-1' %}" class="nav-link">
+                <i class="fas fa-user-plus nav-icon"></i>
+                <p>Ajouter un utilisateur</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'leads:list-utilisateur' %}" class="nav-link">
+                <i class="fas fa-list nav-icon"></i>
+                <p>Liste des utilisateurs</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- fin gestion des utilisateurs -->
+        {% endif %}
 
-          {% if request.user.agent.user_type == 'ad' %} 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="far fa-sun nav-icon"></i>
-              <p>
-               Configuration
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'leads:index_secteur' %}" class="nav-link">
-                  <i class="fas fa-chart-pie nav-icon"></i>
-                  <p>Secteurs d'activité</p>
-                </a>
-                <a href="#" class="nav-link">
-                  <i class="fas fa-chart-pie nav-icon"></i>
-                  <p>Configurer la FAQ</p>
-                </a>
-              </li>
-              
-            </ul>
-          </li>
-          {% endif %} 
+        <!-- Gestion des produits -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              Gestion des produits
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'produits:ajouter-produit' %}" class="nav-link">
+                <i class="fas fa-folder-plus nav-icon"></i>
+                <p>Nouveau produit</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'produits:liste-produits' %}" class="nav-link">
+                <i class="fas fa-list nav-icon"></i>
+                <p>Liste des produits</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fas fa-box-open nav-icon"></i>
+                <p>Stock</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- fin gestion des produits -->
 
-          <!-- Gestion des produits -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-               Gestion des produits
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'produits:ajouter-produit' %}" class="nav-link">
-                  <i class="fas fa-folder-plus nav-icon"></i>
-                  <p>Nouveau produit</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'produits:liste-produits' %}" class="nav-link">
-                  <i class="fas fa-list nav-icon"></i>
-                  <p>Liste des produits</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-box-open nav-icon"></i>
-                  <p>Stock</p>
-                </a>
-              </li>
-             
-            </ul>
-          </li>
-          <!-- fin gestion des produits -->
-
-          <!--TÂCHE-->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-clipboard-check nav-icon"></i>
-              <p>Tâches
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'leads:ajouter_tache' %}" class="nav-link">
-                  <i class="fas fa-plus-square nav-icon"></i>
-                  <p>Nouvelle Tâche</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'leads:list-taches' %}" class="nav-link">
-                  <i class="fas fa-list-ul nav-icon"></i>
-                  <p>Liste des tâches</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'leads:list-taches-archivees' %}" class="nav-link">
-                  <i class="far fa-file-archive nav-icon"></i>
-                  <p>Taches Archivées</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-hourglass-end nav-icon"></i>
-                  <p>Tâches en cours</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-box-open nav-icon"></i>
-                  <p>Tâches à faire</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-sync nav-icon"></i>
-                  <p>Tâches terminé</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-pause nav-icon"></i>
-                  <p>Tâches en pause</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-sync nav-icon"></i>
-                  <p>Tâches annulé</p>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-sync nav-icon"></i>
-                  <p>Assigné un tâche</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!--FIN TACHES-->
-          
-          
-
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+        <!-- Configuration du CRM -->
+        {% if request.user.agent.user_type == 'ad' or request.user.is_staff %}
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="far fa-sun nav-icon"></i>
+            <p>
+              Configuration
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a
+                href="{% url 'mycompany:infos-mon-entreprise' %}"
+                class="nav-link"
+              >
+                <i class="fas fa-chart-pie nav-icon"></i>
+                <p>Mon entreprise</p>
+              </a>
+              <a href="{% url 'leads:index_secteur' %}" class="nav-link">
+                <i class="fas fa-chart-pie nav-icon"></i>
+                <p>Secteurs d'activité</p>
+              </a>
+              <a href="#" class="nav-link">
+                <i class="fas fa-chart-pie nav-icon"></i>
+                <p>Configurer la FAQ</p>
+              </a>
+              <a href="#" class="nav-link">
+                <i class="fas fa-chart-pie nav-icon"></i>
+                <p>Droits d'accès</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        {% endif %}
+        <!--Fin configuration du CRM-->
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
