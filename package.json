@@ -5,7 +5,7 @@
     "scripts": {
         "build": "pip install requirements.txt",
        "test": "echo \"No test specified\" && exit 1",
-        "start": "node index.js"
+        "start": "python manage.py runserver"
     },
     "repository": {
         "type": "git",
